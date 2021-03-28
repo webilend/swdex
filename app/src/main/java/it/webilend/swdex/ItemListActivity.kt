@@ -1,28 +1,32 @@
 package it.webilend.swdex
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.widget.NestedScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.vishal.weather.kotlin.network.SWAPIClient
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 import it.webilend.swdex.dummy.DummyContent
+import it.webilend.swdex.model.Character
+import it.webilend.swdex.model.SWAPIResponse
+import it.webilend.swdex.network.SWRestService
 
-/**
- * An activity representing a list of Pings. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a [ItemDetailActivity] representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 class ItemListActivity : AppCompatActivity() {
 
     /**
@@ -30,6 +34,8 @@ class ItemListActivity : AppCompatActivity() {
      * device.
      */
     private var twoPane: Boolean = false
+    private val swRestService: SWRestService =
+        SWAPIClient.getClient().create(SWRestService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +46,7 @@ class ItemListActivity : AppCompatActivity() {
         toolbar.title = title
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            sendEmailToDeveloper()
         }
 
         if (findViewById<NestedScrollView>(R.id.item_detail_container) != null) {
@@ -52,17 +57,46 @@ class ItemListActivity : AppCompatActivity() {
             twoPane = true
         }
 
-        setupRecyclerView(findViewById(R.id.item_list))
+        swRestService.getCharacters()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .map { response ->
+                response.results.forEach {char ->
+                    char.id = char.url!!.substringBeforeLast("/").substringAfterLast("/")
+                }
+                response
+            }
+            .subscribe({response -> onResponse(response)}, {t -> onFailure(t) })
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, twoPane)
+    private fun onFailure(t: Throwable) {
+        Toast.makeText(this,t.message, Toast.LENGTH_SHORT).show()
     }
 
-    class SimpleItemRecyclerViewAdapter(private val parentActivity: ItemListActivity,
-                                        private val values: List<DummyContent.DummyItem>,
-                                        private val twoPane: Boolean) :
-            RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
+    private fun onResponse(response: SWAPIResponse<Character>) {
+        setupRecyclerView(findViewById(R.id.item_list), response.results)
+        //progress_bar.visibility = View.GONE
+    }
+
+    private fun setupRecyclerView(recyclerView: RecyclerView, items:List<Character>) {
+        recyclerView.adapter = ListItemRecyclerViewAdapter(this, items, twoPane)
+    }
+
+    private fun sendEmailToDeveloper() {
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = Uri.parse("mailto:")
+            intent.putExtra(Intent.EXTRA_EMAIL, MY_EMAIL);
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_email_subject));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent)
+            }
+
+    }
+
+    class ListItemRecyclerViewAdapter(private val parentActivity: ItemListActivity,
+                                      private val values: List<Character>,
+                                      private val twoPane: Boolean) :
+            RecyclerView.Adapter<ListItemRecyclerViewAdapter.ViewHolder>() {
 
         private val onClickListener: View.OnClickListener
 
@@ -96,9 +130,14 @@ class ItemListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.idView.text = item.id
-            holder.contentView.text = item.content
-
+            holder.contentView.text = item.name
+            Glide
+                .with(holder.avatarView.context)
+                .load(AVATAR_ENDPOINT.replace("{id}",item.id!!))
+                .placeholder(R.drawable.loading_spinner)
+                .error(R.drawable.placeholder)
+                .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(180)))
+                .into(holder.avatarView);
             with(holder.itemView) {
                 tag = item
                 setOnClickListener(onClickListener)
@@ -108,7 +147,7 @@ class ItemListActivity : AppCompatActivity() {
         override fun getItemCount() = values.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val idView: TextView = view.findViewById(R.id.id_text)
+            val avatarView: ImageView = view.findViewById(R.id.avatar)
             val contentView: TextView = view.findViewById(R.id.content)
         }
     }

@@ -5,7 +5,10 @@ import it.webilend.swdex.model.Character
 import retrofit2.http.GET
 import retrofit2.http.Query
 import io.reactivex.rxjava3.core.Observable
+import it.webilend.swdex.model.Film
+import it.webilend.swdex.model.SWAPIResponse
 import retrofit2.http.Path
+import retrofit2.http.Url
 
 /**
  * This interface is responsible for holding all APIs need to be invoked by the application.
@@ -14,13 +17,10 @@ import retrofit2.http.Path
  * @since 1.0.0
  */
 interface SWRestService {
-    /**
-     * Returns Star Wars characters list.
-     *
-     * @return {@link Observable<Array<Character>>}
-     */
     @GET("people/")
-    fun getCharacters():Observable<Array<Character>>
+    fun getCharacters():Observable<SWAPIResponse<Character>>
     @GET("people/{id}/")
     fun getCharacter(@Path("id") id:Int): Observable<Character>
+    @GET("/films/{id}/")
+    fun getFilm(@Path("id") filmId:Int): Observable<Film>
 }

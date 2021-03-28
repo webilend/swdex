@@ -1,6 +1,7 @@
 package it.webilend.swdex
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -33,9 +34,13 @@ class MainActivity : AppCompatActivity() {
             .setMessage(R.string.choice_appmode_msg)
             .setPositiveButton(R.string.choice_appmode_grid) { dialog, which ->
                 Log.i("Choice mode","grid")
+                startActivity(Intent(this, ItemGridActivity::class.java))
+                dialog.dismiss()
             }
             .setNegativeButton(R.string.choice_appmode_list){ dialog, which ->
                 Log.i("Choice mode","list")
+                startActivity(Intent(this, ItemListActivity::class.java))
+                dialog.dismiss()
             }
 
         dialogBuilder.show()

@@ -3,6 +3,9 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Character(
+    @SerializedName("id")
+    @Expose
+    var id: String?,
     @SerializedName("birth_year")
     @Expose
     val birthYear: String?,

@@ -15,4 +15,7 @@
     <string name="choice_appmode_msg">The data of this app can be displayed either using list or grid. Which do you prefer?</string>
     <string name="choice_appmode_grid">Grid</string>
     <string name="choice_appmode_list">List</string>
+
+    <!-- Email -->
+    <string name="feedback_email_subject">Feedback SWdex</string>
 </resources>

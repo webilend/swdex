@@ -15,4 +15,7 @@
     <string name="choice_appmode_msg">Quest\'app supporta la visualizzazione dei dati tramite lista o griglia. Quale preferisci?</string>
     <string name="choice_appmode_grid">Griglia</string>
     <string name="choice_appmode_list">Lista</string>
+
+    <!-- Email -->
+    <string name="feedback_email_subject">Feedback SWdex</string>
 </resources>
