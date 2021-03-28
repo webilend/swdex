@@ -20,7 +20,7 @@
             android:text="@string/lbl_sex"
             android:textStyle="bold"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
         <TextView
             android:id="@+id/item_sex"
             style="?android:attr/textAppearanceLarge"
@@ -30,7 +30,7 @@
             android:textIsSelectable="true"
             android:gravity="end"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             android:text="@string/lbl_height"
             android:textStyle="bold"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
         <TextView
             android:id="@+id/item_height"
             style="?android:attr/textAppearanceLarge"
@@ -55,7 +55,7 @@
             android:textIsSelectable="true"
             android:gravity="end"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
             android:text="@string/lbl_eyescolor"
             android:textStyle="bold"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
         <TextView
             android:id="@+id/item_eyescolor"
             style="?android:attr/textAppearanceLarge"
@@ -80,7 +80,7 @@
             android:textIsSelectable="true"
             android:gravity="end"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,7 +95,7 @@
             android:text="@string/lbl_skincolor"
             android:textStyle="bold"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
         <TextView
             android:id="@+id/item_skincolor"
             style="?android:attr/textAppearanceLarge"
@@ -105,7 +105,7 @@
             android:textIsSelectable="true"
             android:gravity="end"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -120,7 +120,7 @@
             android:text="@string/lbl_haircolor"
             android:textStyle="bold"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
         <TextView
             android:id="@+id/item_haircolor"
             style="?android:attr/textAppearanceLarge"
@@ -130,7 +130,7 @@
             android:textIsSelectable="true"
             android:gravity="end"
             android:layout_weight="1"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -144,7 +144,7 @@
             android:textIsSelectable="true"
             android:text="@string/lbl_film"
             android:textStyle="bold"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
         <ProgressBar
             android:id="@+id/item_film_progressbar"
             android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
             android:textIsSelectable="true"
             android:text="@string/lbl_vehicles"
             android:textStyle="bold"
-            tools:context=".ItemDetailFragment" />
+            tools:context=".fragment.ItemDetailFragment" />
         <ProgressBar
             android:id="@+id/item_vehicle_progressbar"
             android:layout_width="wrap_content"

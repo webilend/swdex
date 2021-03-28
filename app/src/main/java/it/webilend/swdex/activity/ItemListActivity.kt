@@ -1,18 +1,15 @@
-package it.webilend.swdex
+package it.webilend.swdex.activity
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -21,18 +18,17 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import it.webilend.swdex.*
+import it.webilend.swdex.fragment.ItemDetailFragment
 import it.webilend.swdex.model.Character
 import it.webilend.swdex.model.SWAPIResponse
 
 
 class ItemListActivity : AppCompatActivity() {
-
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private var twoPane: Boolean = false
+    private var twoPane: Boolean = false // for tablets
     private var page = 1
+    private var mode = "LIST"
+    private var characters = mutableListOf<Character>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +50,7 @@ class ItemListActivity : AppCompatActivity() {
             // activity should be in two-pane mode.
             twoPane = true
         }
-
+        findViewById<ProgressBar>(R.id.main_loading).visibility = View.VISIBLE
         SWManager.swRestService.getCharacters(page)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -63,6 +59,7 @@ class ItemListActivity : AppCompatActivity() {
                     char.id = char.url!!.substringBeforeLast("/").substringAfterLast("/")
                 }
                 SWManager.characters.addAll(response.results)
+                this.characters = SWManager.characters
                 page++
                 response
             }
@@ -70,17 +67,56 @@ class ItemListActivity : AppCompatActivity() {
     }
 
     private fun onFailure(t: Throwable) {
+        findViewById<ProgressBar>(R.id.main_loading).visibility = View.GONE
         Toast.makeText(this,t.message, Toast.LENGTH_SHORT).show()
     }
 
     private fun onResponse(response: SWAPIResponse<Character>) {
         setupRecyclerView(findViewById(R.id.item_list), response.results)
-        //progress_bar.visibility = View.GONE
+        findViewById<ProgressBar>(R.id.main_loading).visibility = View.GONE
+    }
+
+    private fun switchMode() {
+        mode = if(this.mode == "LIST") "GRID" else "LIST"
+        val recyclerView = findViewById<RecyclerView>(R.id.item_list)
+        if(mode == "LIST") {
+            recyclerView.layoutManager = LinearLayoutManager(this)
+        }
+        else {
+            recyclerView.layoutManager = GridLayoutManager(this, 3)
+        }
+        recyclerView.adapter =
+            ListItemRecyclerViewAdapter(
+                this,
+                this.characters,
+                mode
+            )
+
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView, items:List<Character>) {
-        recyclerView.adapter = ListItemRecyclerViewAdapter(this, items, twoPane)
-        recyclerView.layoutManager = GridLayoutManager(this, 3)
+        recyclerView.adapter =
+            ListItemRecyclerViewAdapter(
+                this,
+                items,
+                mode
+            )
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.switch_mode -> {
+                switchMode()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun sendEmailToDeveloper() {
@@ -96,7 +132,7 @@ class ItemListActivity : AppCompatActivity() {
 
     class ListItemRecyclerViewAdapter(private val parentActivity: ItemListActivity,
                                       private val values: List<Character>,
-                                      private val twoPane: Boolean) :
+                                      private val mode: String) :
             RecyclerView.Adapter<ListItemRecyclerViewAdapter.ViewHolder>() {
 
         private val onClickListener: View.OnClickListener
@@ -104,22 +140,12 @@ class ItemListActivity : AppCompatActivity() {
         init {
             onClickListener = View.OnClickListener { v ->
                 val item = v.tag as Character
-                if (twoPane) {
-                    val fragment = ItemDetailFragment().apply {
-                        arguments = Bundle().apply {
-                            putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
-                        }
-                    }
-                    parentActivity.supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.item_detail_container, fragment)
-                            .commit()
-                } else {
-                    val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-                        putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
-                    }
-                    v.context.startActivity(intent)
+
+                val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
+                    putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
                 }
+                v.context.startActivity(intent)
+
             }
         }
 
@@ -130,6 +156,7 @@ class ItemListActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.containerView.orientation = if(mode == "LIST") LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
             val item = values[position]
             holder.contentView.text = item.name
             Glide
@@ -148,6 +175,7 @@ class ItemListActivity : AppCompatActivity() {
         override fun getItemCount() = values.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val containerView: LinearLayout = view.findViewById(R.id.list_container)
             val avatarView: ImageView = view.findViewById(R.id.avatar)
             val contentView: TextView = view.findViewById(R.id.content)
         }

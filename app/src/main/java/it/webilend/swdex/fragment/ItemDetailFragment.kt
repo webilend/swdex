@@ -1,4 +1,4 @@
-package it.webilend.swdex
+package it.webilend.swdex.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import it.webilend.swdex.R
+import it.webilend.swdex.SWManager
 import it.webilend.swdex.adapter.FilmRecyclerViewAdapter
 import it.webilend.swdex.adapter.VehicleRecyclerViewAdapter
 import it.webilend.swdex.model.Character
@@ -38,7 +40,9 @@ class ItemDetailFragment : Fragment() {
                 // Load the dummy content specified by the fragment
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
-                character = SWManager.characters.find { char -> char.id == it.getString(ARG_ITEM_ID) }
+                character = SWManager.characters.find { char -> char.id == it.getString(
+                    ARG_ITEM_ID
+                ) }
                 activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = character?.name
             }
         }

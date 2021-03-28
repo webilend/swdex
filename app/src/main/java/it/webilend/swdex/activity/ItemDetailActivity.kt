@@ -1,13 +1,13 @@
-package it.webilend.swdex
+package it.webilend.swdex.activity
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import it.webilend.swdex.*
+import it.webilend.swdex.fragment.ItemDetailFragment
 
 /**
  * An activity representing a single Item detail screen. This
@@ -29,11 +29,14 @@ class ItemDetailActivity : AppCompatActivity() {
             // using a fragment transaction.
             val fragment = ItemDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ItemDetailFragment.ARG_ITEM_ID,
+                    putString(
+                        ItemDetailFragment.ARG_ITEM_ID,
                             intent.getStringExtra(ItemDetailFragment.ARG_ITEM_ID))
                 }
             }
-            val char = SWManager.characters.find { char -> char.id == intent.getStringExtra(ItemDetailFragment.ARG_ITEM_ID) }
+            val char = SWManager.characters.find { char -> char.id == intent.getStringExtra(
+                ItemDetailFragment.ARG_ITEM_ID
+            ) }
             Glide
                 .with(this)
                 .load(AVATAR_ENDPOINT.replace("{id}",char?.id!!))

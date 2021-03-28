@@ -10,11 +10,7 @@ object SWManager{
         SWAPIClient.getClient().create(SWRestService::class.java)
 
     init {
-        println("Singleton class invoked.")
-    }
-    var variableName = "I am Var"
-    fun printVarName(){
-        println(variableName)
+        println("SWManager created!")
     }
 
 }
