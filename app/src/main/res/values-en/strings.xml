@@ -16,6 +16,19 @@
     <string name="choice_appmode_grid">Grid</string>
     <string name="choice_appmode_list">List</string>
 
+    <!-- Detail  -->
+    <string name="lbl_sex">Genre:</string>
+    <string name="lbl_eyescolor">Eyes color:</string>
+    <string name="lbl_haircolor">Hair color:</string>
+    <string name="lbl_skincolor">Skin color:</string>
+    <string name="lbl_birthyear">Birthyear:</string>
+    <string name="lbl_vehicles">Vehicles:</string>
+    <string name="lbl_starships">Starships:</string>
+    <string name="lbl_mass">Mass:</string>
+    <string name="lbl_homeworld">Homeworld:</string>
+    <string name="lbl_height">Height:</string>
+    <string name="lbl_film">Film:</string>
+    <string name="lbl_film_year">Released on:</string>
     <!-- Email -->
     <string name="feedback_email_subject">Feedback SWdex</string>
 </resources>

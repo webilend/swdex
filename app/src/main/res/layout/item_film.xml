@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/txt_film"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginTop="2dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        tools:text="Name" />
+    <TextView
+        android:id="@+id/lbl_film_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/txt_film"
+        android:textColor="#706E6E"
+        android:textSize="14sp"
+        android:text="@string/lbl_film_year" />
+    <TextView
+        android:id="@+id/txt_film_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/lbl_film_year"
+        android:layout_below="@id/txt_film"
+        android:textAlignment="center"
+        android:textColor="#706E6E"
+        android:textSize="16sp"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/txt_film_opening"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_below="@id/txt_film_year"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        tools:text="Name" />
+</RelativeLayout>

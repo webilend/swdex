@@ -3,29 +3,27 @@ package it.webilend.swdex
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.core.widget.NestedScrollView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.vishal.weather.kotlin.network.SWAPIClient
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-
-import it.webilend.swdex.dummy.DummyContent
 import it.webilend.swdex.model.Character
 import it.webilend.swdex.model.SWAPIResponse
-import it.webilend.swdex.network.SWRestService
+
 
 class ItemListActivity : AppCompatActivity() {
 
@@ -34,8 +32,8 @@ class ItemListActivity : AppCompatActivity() {
      * device.
      */
     private var twoPane: Boolean = false
-    private val swRestService: SWRestService =
-        SWAPIClient.getClient().create(SWRestService::class.java)
+    private var page = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,13 +55,15 @@ class ItemListActivity : AppCompatActivity() {
             twoPane = true
         }
 
-        swRestService.getCharacters()
+        SWManager.swRestService.getCharacters(page)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .map { response ->
                 response.results.forEach {char ->
                     char.id = char.url!!.substringBeforeLast("/").substringAfterLast("/")
                 }
+                SWManager.characters.addAll(response.results)
+                page++
                 response
             }
             .subscribe({response -> onResponse(response)}, {t -> onFailure(t) })
@@ -80,6 +80,7 @@ class ItemListActivity : AppCompatActivity() {
 
     private fun setupRecyclerView(recyclerView: RecyclerView, items:List<Character>) {
         recyclerView.adapter = ListItemRecyclerViewAdapter(this, items, twoPane)
+        recyclerView.layoutManager = GridLayoutManager(this, 3)
     }
 
     private fun sendEmailToDeveloper() {
@@ -102,7 +103,7 @@ class ItemListActivity : AppCompatActivity() {
 
         init {
             onClickListener = View.OnClickListener { v ->
-                val item = v.tag as DummyContent.DummyItem
+                val item = v.tag as Character
                 if (twoPane) {
                     val fragment = ItemDetailFragment().apply {
                         arguments = Bundle().apply {

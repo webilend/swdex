@@ -16,6 +16,20 @@
     <string name="choice_appmode_grid">Griglia</string>
     <string name="choice_appmode_list">Lista</string>
 
+    <!-- Detail  -->
+    <string name="lbl_sex">Genere:</string>
+    <string name="lbl_eyescolor">Colore occhi:</string>
+    <string name="lbl_haircolor">Colore capelli:</string>
+    <string name="lbl_skincolor">Colore pelle:</string>
+    <string name="lbl_birthyear">Nato il:</string>
+    <string name="lbl_vehicles">Veicoli:</string>
+    <string name="lbl_starships">Navicelle:</string>
+    <string name="lbl_mass">Massa:</string>
+    <string name="lbl_homeworld">Pianeta:</string>
+    <string name="lbl_height">Altezza:</string>
+    <string name="lbl_film">Film:</string>
+    <string name="lbl_film_year">Rilasciato il:</string>
+
     <!-- Email -->
     <string name="feedback_email_subject">Feedback SWdex</string>
 </resources>

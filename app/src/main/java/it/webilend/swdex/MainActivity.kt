@@ -35,11 +35,13 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.choice_appmode_grid) { dialog, which ->
                 Log.i("Choice mode","grid")
                 startActivity(Intent(this, ItemGridActivity::class.java))
+                finish()
                 dialog.dismiss()
             }
             .setNegativeButton(R.string.choice_appmode_list){ dialog, which ->
                 Log.i("Choice mode","list")
                 startActivity(Intent(this, ItemListActivity::class.java))
+                finish()
                 dialog.dismiss()
             }
 

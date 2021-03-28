@@ -1,10 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_detail"
-    style="?android:attr/textAppearanceLarge"
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context=".ItemDetailFragment" />
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/text_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:text="@string/lbl_sex"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+        <TextView
+            android:id="@+id/item_sex"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:gravity="end"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:text="@string/lbl_height"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+        <TextView
+            android:id="@+id/item_height"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:gravity="end"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:text="@string/lbl_eyescolor"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+        <TextView
+            android:id="@+id/item_eyescolor"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:gravity="end"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:text="@string/lbl_skincolor"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+        <TextView
+            android:id="@+id/item_skincolor"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:gravity="end"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:text="@string/lbl_haircolor"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+        <TextView
+            android:id="@+id/item_haircolor"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:gravity="end"
+            android:layout_weight="1"
+            tools:context=".ItemDetailFragment" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:text="@string/lbl_film"
+            android:textStyle="bold"
+            tools:context=".ItemDetailFragment" />
+        <ProgressBar
+            android:id="@+id/item_film_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            ></ProgressBar>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/item_films"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_film" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textIsSelectable="true"
+            android:text="@string/lbl_vehicles"
+            android:textStyle="bold"
+            tools:context=".ItemDetailFragment" />
+        <ProgressBar
+            android:id="@+id/item_vehicle_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/item_vehicles"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_vehicle" />
+    </LinearLayout>
+
+</LinearLayout>
+
